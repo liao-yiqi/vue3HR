@@ -1,5 +1,3 @@
-import './assets/main.css' //基础样式-引入css样式
-
 import { createApp } from 'vue' //按需引入vue依赖包 按照需要的引入
 import { createPinia } from 'pinia' //插件-提供共享状态的功能
 
