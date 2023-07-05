@@ -10,15 +10,24 @@
       <a-card class="login-card">
         <!-- 放置登录表单 -->
         <!-- autocomplete不自动填充表单 -->
-        <a-form autocomplete="off">
-          <a-form-item>
-            <a-input size="large"></a-input>
+        <a-form :model="loginForm" autocomplete="off">
+          <a-form-item
+            name="mobile"
+            :rules="[{ required: true, message: '手机号不能为空', trigger: ['change', 'blur'] }]"
+          >
+            <!-- 手机号 -->
+            <!-- v-model原理实现 v2-v3的变化  v-model :value-> modelValue -->
+            <!-- v-model实现原理 :value  @input -->
+            <a-input size="large" v-model:value="loginForm.mobile"></a-input>
           </a-form-item>
-          <a-form-item>
-            <a-input-password size="large"></a-input-password>
+          <a-form-item
+            name="password"
+            :rules="[{ required: true, message: '密码不能为空', trigger: ['change', 'blur'] }]"
+          >
+            <a-input-password size="large" v-model:value="loginForm.password"></a-input-password>
           </a-form-item>
-          <a-form-item>
-            <a-checkbox>用户平台使用协议</a-checkbox>
+          <a-form-item name="isAgree">
+            <a-checkbox v-model:checked="loginForm.isAgree">用户平台使用协议</a-checkbox>
           </a-form-item>
           <a-form-item>
             <a-button size="large" type="primary" block>登录</a-button>
@@ -28,6 +37,18 @@
     </div>
   </div>
 </template>
+<script setup>
+// 实现表单的校验
+// 1. 声明响应式数据
+import { reactive } from 'vue'
+
+const loginForm = reactive({
+  // 手机号 密码  是否同意
+  mobile: '13800000002', // 这是我们的系统默认账号- 目的是让各位直接可以登录
+  password: 'hm#qd@23!',
+  isAgree: false // 纯前端数据
+})
+</script>
 
 <style lang="less">
 .login-container {
