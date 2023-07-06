@@ -8,7 +8,6 @@
     <div class="form">
       <h3>iHRM 人力资源管理系统</h3>
       <a-card class="login-card">
-        <!-- 放置登录表单 -->
         <!-- autocomplete不自动填充表单 -->
         <a-form :model="loginForm" autocomplete="off" @finish="onFinish">
           <a-form-item
@@ -31,8 +30,8 @@
           </a-form-item>
           <a-form-item>
             <a-button size="large" type="primary" block htmlType="submit">登录</a-button>
-          </a-form-item> </a-form
-        >·
+          </a-form-item>
+        </a-form>
       </a-card>
     </div>
   </div>
@@ -44,7 +43,7 @@ import { login } from '@/api/login'
 import { useRouter } from 'vue-router'
 import useToken from '@/stores/token'
 import { reactive } from 'vue'
-const { updateToken } = useToken
+
 const router = useRouter()
 
 const loginForm = reactive({
@@ -55,9 +54,11 @@ const loginForm = reactive({
 })
 
 const onFinish = async (values) => {
+  const { updateToken } = useToken()
   const data = await login(values)
   console.log(data)
   updateToken(data)
+
   //登录跳转
   router.push('/')
 }
