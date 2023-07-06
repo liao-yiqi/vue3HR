@@ -10,7 +10,7 @@
       <a-card class="login-card">
         <!-- 放置登录表单 -->
         <!-- autocomplete不自动填充表单 -->
-        <a-form :model="loginForm" autocomplete="off">
+        <a-form :model="loginForm" autocomplete="off" @finish="onFinish">
           <a-form-item
             name="mobile"
             :rules="[{ required: true, message: '手机号不能为空', trigger: ['change', 'blur'] }]"
@@ -26,13 +26,13 @@
           >
             <a-input-password size="large" v-model:value="loginForm.password"></a-input-password>
           </a-form-item>
-          <a-form-item name="isAgree">
+          <a-form-item name="isAgree" :rules="[{ validator: validatorAgree }]">
             <a-checkbox v-model:checked="loginForm.isAgree">用户平台使用协议</a-checkbox>
           </a-form-item>
           <a-form-item>
-            <a-button size="large" type="primary" block>登录</a-button>
-          </a-form-item>
-        </a-form>
+            <a-button size="large" type="primary" block htmlType="submit">登录</a-button>
+          </a-form-item> </a-form
+        >·
       </a-card>
     </div>
   </div>
@@ -48,6 +48,17 @@ const loginForm = reactive({
   password: 'hm#qd@23!',
   isAgree: false // 纯前端数据
 })
+
+const onFinish = (value) => {
+  console.log(value)
+}
+
+//自定义校验规则 rule是当前的规则 value是当前的值
+const validatorAgree = (rule, value) => {
+  //判断value是不是true 如果不是true就报错
+  //Promise是es6的一个构造函数 resolve成功 reject失败
+  return value ? Promise.resolve() : Promise.reject(new Error('您必须同意用户协议'))
+}
 </script>
 
 <style lang="less">
