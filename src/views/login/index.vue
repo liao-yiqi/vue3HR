@@ -54,9 +54,11 @@ const onFinish = (value) => {
 }
 
 //自定义校验规则 rule是当前的规则 value是当前的值
-const validatorAgree = (rule, value) => {
+const validatorAgree = (_rule, value) => {
   //判断value是不是true 如果不是true就报错
   //Promise是es6的一个构造函数 resolve成功 reject失败
+  //_占位符，表示该参数不使用
+  console.log(value)
   return value ? Promise.resolve() : Promise.reject(new Error('您必须同意用户协议'))
 }
 </script>
