@@ -23,8 +23,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      api: {
-        target: 'http://ihtm.itheima.net',
+      '/api': {
+        target: 'http://ihrm.itheima.net',
         changeOrigin: true
       }
     }

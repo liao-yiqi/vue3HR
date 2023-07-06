@@ -40,17 +40,26 @@
 <script setup>
 // 实现表单的校验
 // 1. 声明响应式数据
+import { login } from '@/api/login'
+import { useRouter } from 'vue-router'
+import useToken from '@/stores/token'
 import { reactive } from 'vue'
+const { updateToken } = useToken
+const router = useRouter()
 
 const loginForm = reactive({
   // 手机号 密码  是否同意
-  mobile: '13800000002', // 这是我们的系统默认账号- 目的是让各位直接可以登录
+  mobile: '13800000002',
   password: 'hm#qd@23!',
   isAgree: false // 纯前端数据
 })
 
-const onFinish = (value) => {
-  console.log(value)
+const onFinish = async (values) => {
+  const data = await login(values)
+  console.log(data)
+  updateToken(data)
+  //登录跳转
+  router.push('/')
 }
 
 //自定义校验规则 rule是当前的规则 value是当前的值
