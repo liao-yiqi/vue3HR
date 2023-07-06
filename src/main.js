@@ -5,10 +5,13 @@ import App from './App.vue' //组件 一个 .vue就是一个组件 根组件-整
 import router from './router' // 路由- SPA-Single Page Application 项目-地址-组件
 import AntD from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less'
+import PluginState from 'pinia-plugin-persistedstate' //持久化插件
 
 const app = createApp(App) //创建一个vue3的应用实例 对象 实例
+const piniaApp = createPinia()
 
-app.use(createPinia()) //先创建pinia实例,再完成它的注册
+piniaApp.use(PluginState) //注册持久化插件
+app.use(piniaApp) //先创建pinia实例,再完成它的注册
 app.use(router) //注册路由 vue2-vue.use() vue3-app.use()-注册插件
 app.use(AntD)
 
