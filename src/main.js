@@ -6,6 +6,7 @@ import 'ant-design-vue/dist/antd.less' // less - css的预处理器 可以写嵌
 import PluginState from 'pinia-plugin-persistedstate'
 import App from './App.vue'
 import router from './router'
+import '@/permission'
 
 const app = createApp(App)
 const piniaApp = createPinia()
