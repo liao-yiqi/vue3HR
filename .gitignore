@@ -30,3 +30,5 @@ coverage
 *.DS_Store
 .*
 !/.gitignore
+！/.prettierrc
+!/.eslintrc.js
