@@ -1,32 +1,39 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue({
+      // 显式启用响应性语法糖，支持对 defineProps 结果解构
+      reactivityTransform: true,
+    }),
+    vueJsx(),
+  ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
       less: {
         modifyVars: {
-          'primary-color': '#0960bd' // 配置主题的主色调
+          "primary-color": "#0960bd", // 配置主题的主色调
         },
-        javascriptEnabled: true
-      }
-    }
+        javascriptEnabled: true,
+      },
+    },
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://ihrm.itheima.net',
-        changeOrigin: true
-      }
-    }
-  }
-})
+      "/api": {
+        target: "http://ihrm.itheima.net",
+        changeOrigin: true,
+      },
+    },
+  },
+});

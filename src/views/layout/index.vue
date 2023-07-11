@@ -5,7 +5,10 @@
       <SideBar />
     </a-layout-sider>
     <a-layout class="right-layout">
-      <a-layout-header> 顶部内容 </a-layout-header>
+      <a-layout-header>
+        <!-- v-model:collapsed -> v3 默认的监听的事件 @update:modelValue 变成了 update:collapsed -->
+        <nav-bar v-model:collapsed="collapsed"></nav-bar>
+      </a-layout-header>
       <a-layout-content> 中间内容 </a-layout-content>
     </a-layout>
   </a-layout>
@@ -14,6 +17,7 @@
 <script setup>
   import { ref } from "vue";
   import SideBar from "./components/side-bar.vue";
+  import NavBar from "./components/nav-bar.vue";
   const collapsed = ref(false);
 </script>
 
