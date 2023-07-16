@@ -1,10 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="logo">
-      <div class="icon"></div>
-      <img src="@/assets/common/login.svg" width="300" alt="" />
-      <p>开箱即用的中后台管理系统</p>
-    </div>
+    <div class="logo"></div>
     <div class="form">
       <h3>iHRM 人力资源管理系统</h3>
       <a-card class="login-card">
@@ -80,26 +76,14 @@ const validatorAgree = (_rule, value) => {
   height: 100vh;
   .logo {
     flex: 3;
-    background: rgba(38, 72, 176) url(../../assets/common/logBg.png) no-repeat center / cover;
+    background: rgba(38, 72, 176) url(../../assets/common/avatar.png) no-repeat center / cover;
     border-top-right-radius: 60px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
     padding: 0 100px;
-    .icon {
-      background: url(../../assets/common/logo.png) no-repeat 70px center / contain;
-      width: 300px;
-      height: 50px;
-      margin-bottom: 50px;
-    }
-    p {
-      color: #fff;
-      font-size: 18px;
-      margin-top: 20px;
-      width: 300px;
-      text-align: center;
-    }
+    box-shadow: 2px -5px 7px 5px rgba(0, 0, 0, 0.3);
   }
   .form {
     flex: 2;
