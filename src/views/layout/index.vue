@@ -9,7 +9,7 @@
         <!-- v-model:collapsed -> v3 默认的监听的事件 @update:modelValue 变成了 update:collapsed -->
         <nav-bar v-model:collapsed="collapsed"></nav-bar>
       </a-layout-header>
-      <a-layout-content> <dashboard /></a-layout-content>
+      <a-layout-content><router-view /></a-layout-content>
     </a-layout>
   </a-layout>
 </template>
@@ -18,7 +18,6 @@
   import { ref } from "vue";
   import SideBar from "./components/side-bar.vue";
   import NavBar from "./components/nav-bar.vue";
-  import dashboard from "@/views/dashboard/index.vue";
   const collapsed = ref(false);
 </script>
 
