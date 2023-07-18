@@ -12,7 +12,14 @@
             total: pageParams.total,
             onChange: changePage
           }"
-        ></a-table>
+        >
+          <template #bodyCell="{ column }">
+            <a-space v-if="column.dataIndex === 'operate'">
+              <a-button type="primary">编辑</a-button>
+              <a-button type="danger">删除</a-button>
+            </a-space>
+          </template>
+        </a-table>
       </a-tab-pane>
       <a-tab-pane key="setting" tab="公司设置" force-render> </a-tab-pane>
     </a-tabs>
@@ -23,7 +30,13 @@ import { ref, onMounted, reactive } from 'vue'
 import { getRoleList } from '@/api/setting'
 //定义列信息
 const columns = [
-  { title: '序号' },
+  {
+    title: '序号',
+    customRender({ index }) {
+      //要和当前的分页数据进行集合
+      return (pageParams.page - 1) * pageParams.pagesize + index + 1
+    }
+  },
   { title: '角色名称', dataIndex: 'name' },
   { title: '角色描述', dataIndex: 'description' },
   { title: '操作', dataIndex: 'operate' }
