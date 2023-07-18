@@ -15,10 +15,10 @@
             onChange: changePage
           }"
         >
-          <template #bodyCell="{ column }">
+          <template #bodyCell="{ column, record }">
             <a-space v-if="column.dataIndex === 'operate'">
               <a-button type="primary">编辑</a-button>
-              <a-button type="danger">删除</a-button>
+              <a-button type="danger" @click="delRow(record.id)">删除</a-button>
             </a-space>
           </template>
         </a-table>
@@ -47,7 +47,8 @@
 </template>
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
-import { addRole, getRoleList } from '@/api/setting'
+import { addRole, getRoleList, delRole } from '@/api/setting'
+import { Form, message, Modal } from 'ant-design-vue'
 //定义列信息
 const columns = [
   {
@@ -82,7 +83,6 @@ const changePage = (page, pagesize) => {
   pageParams.pagesize = pagesize
   getList()
 }
-import { Form, message } from 'ant-design-vue'
 
 const visible = ref(false) // 定义控制弹层的显示
 // 定义响应式数据
@@ -119,6 +119,20 @@ const btnOK = async () => {
 const btnCancel = () => {
   //重置字段 重置数据 消除校验提示
   form.resetFields()
+}
+//删除按钮
+const delRow = async (id) => {
+  Modal.confirm({
+    title: '提示',
+    content: '确认删除此条数据吗？',
+    async onOk() {
+      await delRole(id)
+      // 因为删除之后，如果第二页没数据了 还请求第二页数据、
+      list.value.length === 1 && pageParams.page-- // 当前页只有一条数据的时候 往前走一页
+      getList()
+      message.success('删除数据成功')
+    }
+  })
 }
 </script>
 <style lang="less" scoped>
