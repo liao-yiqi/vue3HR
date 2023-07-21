@@ -38,6 +38,7 @@ import { onMounted, reactive, ref } from 'vue'
 import { getEmployeeList } from '@/api/employee'
 import DefaultImg from '@/assets/default.png'
 import dayjs from 'dayjs'
+import { message } from 'ant-design-vue'
 
 const columns = [
   {
@@ -87,6 +88,7 @@ onMounted(() => {
 const formatTimeOfEntry = ref([])
 //获取列表
 const getList = async () => {
+  const close = message.loading('员工数据加载中')
   const { rows, total } = await getEmployeeList(pageParams)
   list.value = rows
   // console.log(rows)
@@ -97,6 +99,7 @@ const getList = async () => {
     formatTimeOfEntry.value = item.timeOfEntry
     console.log(item.timeOfEntry)
   })
+  close()
 }
 const pageParams = reactive({
   page: 1,
