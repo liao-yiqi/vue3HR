@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="app-container">
       <a-card class="tools-card">
-        <a-button type="primary">新增员工</a-button>
+        <a-button type="primary" @click="addEmployee">新增员工</a-button>
       </a-card>
       <a-card>
         <a-table
@@ -32,6 +32,7 @@
       </a-card>
     </div>
   </div>
+  <AddEmployee v-model:showDialog="showDialog"></AddEmployee>
 </template>
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
@@ -39,6 +40,7 @@ import { getEmployeeList } from '@/api/employee'
 import DefaultImg from '@/assets/default.png'
 import dayjs from 'dayjs'
 import { message } from 'ant-design-vue'
+import AddEmployee from './components/add-employee.vue'
 
 const columns = [
   {
@@ -97,7 +99,6 @@ const getList = async () => {
   rows.forEach((item) => {
     item.timeOfEntry = item.timeOfEntry ? dayjs(item.timeOfEntry).format('YYYY-MM-DD') : ''
     formatTimeOfEntry.value = item.timeOfEntry
-    console.log(item.timeOfEntry)
   })
   close()
 }
@@ -110,6 +111,11 @@ const changePage = (page, pagesize) => {
   pageParams.page = page
   pageParams.pagesize = pagesize
   getList()
+}
+//控制弹窗
+const showDialog = ref(false)
+const addEmployee = () => {
+  showDialog.value = true
 }
 </script>
 
