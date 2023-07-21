@@ -17,7 +17,7 @@
         >
           <template #bodyCell="{ column, record }">
             <a-space v-if="column.dataIndex === 'operate'">
-              <a-button type="primary">编辑</a-button>
+              <a-button type="primary" @click="editDetailRole(record.id)">编辑</a-button>
               <a-button type="danger" @click="delRow(record.id)">删除</a-button>
             </a-space>
           </template>
@@ -47,7 +47,7 @@
 </template>
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
-import { addRole, getRoleList, delRole } from '@/api/setting'
+import { addRole, getRoleList, delRole, updateRole, getRoleDetail } from '@/api/setting'
 import { Form, message, Modal } from 'ant-design-vue'
 //定义列信息
 const columns = [
@@ -102,8 +102,9 @@ const btnOK = async () => {
   //手动校验表单数据
   await form.validate()
   //校验通过
-  await addRole(formData)
-  message.success('新增角色成功')
+  //如果有id就是修改，没有就是新增
+  formData.id ? await updateRole(formData) : await addRole(formData)
+  message.success(formData.id ? '修改数据成功' : '新增数据成功')
   //新增完成之后跳转到最后一页
   //计算最后一页的页码
   const lastPage = Math.ceil((pageParams.total + 1) / pageParams.pagesize)
@@ -117,8 +118,19 @@ const btnOK = async () => {
 }
 //表单取消
 const btnCancel = () => {
+  //清空id
+  formData.id = null
   //重置字段 重置数据 消除校验提示
   form.resetFields()
+}
+//编辑按钮
+const editDetailRole = async (id) => {
+  //根据id获取详情
+  const { name, description } = await getRoleDetail(id)
+  formData.name = name
+  formData.description = description
+  formData.id = id
+  visible.value = true
 }
 //删除按钮
 const delRow = async (id) => {
