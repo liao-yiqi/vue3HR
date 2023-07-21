@@ -21,7 +21,7 @@
               <a-avatar :size="50" :src="record.staffPhoto || DefaultImg"></a-avatar>
             </template>
             <!-- 入职时间 -->
-            <template v-if="column.dataIndex === 'timeOfEntry'"> aaa </template>
+            <template v-if="column.dataIndex === 'timeOfEntry'"> {{ formatTimeOfEntry }} </template>
             <!-- 操作 -->
             <a-space v-if="column.dataIndex === 'operate'">
               <a-button type="primary">编辑</a-button>
@@ -37,6 +37,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { getEmployeeList } from '@/api/employee'
 import DefaultImg from '@/assets/default.png'
+import dayjs from 'dayjs'
 
 const columns = [
   {
@@ -83,12 +84,19 @@ const list = ref([])
 onMounted(() => {
   getList()
 })
+const formatTimeOfEntry = ref([])
 //获取列表
 const getList = async () => {
   const { rows, total } = await getEmployeeList(pageParams)
   list.value = rows
+  // console.log(rows)
   pageParams.total = total
-  console.log(rows.timeOfEntry)
+  //格式化时间
+  rows.forEach((item) => {
+    item.timeOfEntry = item.timeOfEntry ? dayjs(item.timeOfEntry).format('YYYY-MM-DD') : ''
+    formatTimeOfEntry.value = item.timeOfEntry
+    console.log(item.timeOfEntry)
+  })
 }
 const pageParams = reactive({
   page: 1,
