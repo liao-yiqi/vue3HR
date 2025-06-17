@@ -37,7 +37,7 @@
     userInfo.value = await getUserInfo();
   };
   onMounted(() => {
-    getUserProfile();
+    // getUserProfile();
   });
   //退出
   const logOut = () => {

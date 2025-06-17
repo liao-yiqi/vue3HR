@@ -15,25 +15,27 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   css: {
     preprocessorOptions: {
       less: {
         modifyVars: {
-          "primary-color": "#0960bd", // 配置主题的主色调
+          'primary-color': '#0960bd', // 配置主题的主色调
         },
         javascriptEnabled: true,
       },
     },
   },
   server: {
+    open: true,
     proxy: {
-      "/api": {
-        target: "http://ihrm.itheima.net",
+      '/api': {
+        target: 'http://localhost:8080',
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/v1/api'),
       },
     },
   },
-});
+})
