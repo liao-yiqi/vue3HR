@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="logo"></div>
     <div class="form">
-      <h3>iHRM 人力资源管理系统</h3>
+      <h3>qa-center system</h3>
       <a-card class="login-card">
         <!-- autocomplete不自动填充表单 -->
         <a-form :model="loginForm" autocomplete="off" @finish="onFinish">
@@ -76,7 +76,7 @@ const validatorAgree = (_rule, value) => {
   height: 100vh;
   .logo {
     flex: 3;
-    background: rgba(38, 72, 176) url(../../assets/common/avatar.png) no-repeat center / cover;
+    background: rgba(38, 72, 176);
     border-top-right-radius: 60px;
     display: flex;
     flex-direction: column;
